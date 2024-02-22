@@ -44,17 +44,17 @@ type PingData struct {
 
 type CloudflareIPData struct {
 	*PingData
-	lossRate      float32
+	LossRate      float32
 	DownloadSpeed float64
 }
 
 // 计算丢包率
 func (cf *CloudflareIPData) getLossRate() float32 {
-	if cf.lossRate == 0 {
+	if cf.LossRate == 0 {
 		pingLost := cf.Sended - cf.Received
-		cf.lossRate = float32(pingLost) / float32(cf.Sended)
+		cf.LossRate = float32(pingLost) / float32(cf.Sended)
 	}
-	return cf.lossRate
+	return cf.LossRate
 }
 
 func (cf *CloudflareIPData) toString() []string {
@@ -180,8 +180,5 @@ func (s DownloadSpeedSet) Print() {
 	fmt.Printf(headFormat, "IP 地址", "已发送", "已接收", "丢包率", "平均延迟", "下载速度 (MB/s)")
 	for i := 0; i < PrintNum; i++ {
 		fmt.Printf(dataFormat, dateString[i][0], dateString[i][1], dateString[i][2], dateString[i][3], dateString[i][4], dateString[i][5])
-	}
-	if !noOutput() {
-		fmt.Printf("\n完整测速结果已写入 %v 文件，可使用记事本/表格软件查看。\n", Output)
 	}
 }
